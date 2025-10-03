@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devffin Sites</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: #444;
+      color: white;
+      padding: 15px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      padding: 80px 20px;
+      min-height: 100vh;
+    }
+    #home {
+      background: #eee;
+    }
+    #about {
+      background: #ddd;
+    }
+    #contact {
+      background: #ccc;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    input, textarea, button {
+      margin: 5px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background: #444;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #666;
+    }
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="home">
+    <h1>Welcome to Devffin Sites</h1>
+    <p style="text-align:center;">This is the home section of Devffin Sites.</p>
+  </section>
+
+  <section id="about">
+    <h2>About</h2>
+    <p style="max-width:600px; margin:auto; text-align:center;">
+      Devffin Sites allows you to create a simple and clean one-page website for your projects.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <form id="contact-form">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Your message..." rows="5" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Devffin Sites</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("5KGgCCv7VOqmLOwRs"); // ← Remplace avec ton User ID EmailJS
+    })();
+
+    document.getElementById("contact-form").addEventListener("submit", function(event){
+      event.preventDefault();
+
+      emailjs.sendForm("dsites", "dsites", this)
+        .then(function(){
+          alert("Message sent successfully!");
+        }, function(error){
+          alert("Error sending message: " + JSON.stringify(error));
+        });
+    });
+  </script>
+
+</body>
+</html>
