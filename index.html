@@ -1,134 +1,382 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Devffin Sites</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111632">
+  <meta name="description" content="devffin Sites laisse sa place à Page.GD Sites (lnkto Sites) le 1er janvier 2027. Le transfert de vos projets sera possible sur demande, sans migration automatique.">
+  <title>devffin Sites — Créez un site qui vous ressemble</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-      background: #f9f9f9;
-      color: #333;
+    :root {
+      --ink: #1b2040;
+      --ink-soft: #66708a;
+      --paper: #f8f9fd;
+      --navy: #10152f;
+      --navy-light: #1a2144;
+      --purple: #6555f6;
+      --purple-deep: #5243d8;
+      --lavender: #eeebff;
+      --white: #ffffff;
+      --line: #e7e9f4;
+      --sun: #ffcf7a;
+      --radius: 22px;
+      --shadow: 0 22px 70px rgba(24, 24, 74, .10);
     }
-    header {
-      background: #444;
-      color: white;
-      padding: 15px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      text-align: center;
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.6; }
+    body, button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #ffbf6e; outline-offset: 4px; }
+    .container { width: min(1140px, calc(100% - 48px)); margin-inline: auto; }
+    .skip { position: absolute; top: -100px; left: 12px; z-index: 100; background: white; color: var(--ink); padding: 12px 16px; border-radius: 8px; }
+    .skip:focus { top: 12px; }
+    .notice { background: #edebff; border-bottom: 1px solid #dcd7ff; color: #363273; font-size: .88rem; text-align: center; padding: 9px 20px; }
+    .notice strong { font-weight: 850; }
+    .notice a { text-decoration: underline; font-weight: 800; text-underline-offset: 3px; }
+    .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.94); backdrop-filter: blur(18px); border-bottom: 1px solid #e9eaf4; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 78px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; white-space: nowrap; font-size: 1.12rem; font-weight: 850; letter-spacing: -.045em; }
+    .brand-icon { display: grid; place-items: center; width: 39px; height: 39px; border-radius: 12px; background: linear-gradient(135deg, #6a58ff, #a26bff); color: #fff; font-size: 1.15rem; font-weight: 900; box-shadow: 0 8px 18px rgba(102,85,247,.22); }
+    .brand .accent { color: var(--purple); }
+    .desktop-nav { display: flex; gap: 30px; align-items: center; margin-left: auto; font-size: .92rem; font-weight: 670; }
+    .desktop-nav a { transition: color .2s; }
+    .desktop-nav a:hover { color: var(--purple); }
+    .nav-actions { display: flex; align-items: center; gap: 14px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 49px; padding: 12px 22px; border: 1px solid transparent; border-radius: 12px; font-weight: 770; letter-spacing: -.015em; cursor: pointer; transition: transform .2s, background .2s, box-shadow .2s; }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { background: var(--purple); color: var(--white); box-shadow: 0 11px 24px rgba(101,85,246,.23); }
+    .button-primary:hover { background: var(--purple-deep); }
+    .button-light { background: var(--white); color: #302c62; }
+    .button-light:hover { background: #f0efff; }
+    .button-ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.25); }
+    .button-ghost:hover { background: rgba(255,255,255,.08); }
+    .menu-toggle { display: none; border: 1px solid var(--line); background: white; width: 43px; height: 43px; border-radius: 11px; color: var(--ink); cursor: pointer; font-size: 1.3rem; }
+    .mobile-nav { display: none; padding-bottom: 18px; }
+    .mobile-nav a { display: block; padding: 12px 8px; border-top: 1px solid var(--line); font-weight: 700; }
+
+    .hero { overflow: hidden; position: relative; background: var(--navy); color: var(--white); padding: 88px 0 96px; isolation: isolate; }
+    .hero::before { content: ""; position: absolute; width: 800px; height: 800px; border-radius: 50%; left: -500px; top: -440px; background: radial-gradient(circle, rgba(97,79,248,.26), transparent 65%); pointer-events: none; }
+    .hero::after { content: ""; position: absolute; width: 760px; height: 760px; border-radius: 50%; right: -380px; top: -350px; background: radial-gradient(circle, rgba(156,95,236,.27), transparent 64%); pointer-events: none; }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 62px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; border-radius: 999px; color: #e9e5ff; font-weight: 740; font-size: .8rem; padding: 7px 13px; background: rgba(128,111,255,.18); border: 1px solid rgba(169,159,255,.24); }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: #9c92ff; box-shadow: 0 0 0 4px rgba(154,144,255,.13); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin: 24px 0 20px; font-size: clamp(2.9rem, 5.2vw, 4.75rem); line-height: 1.06; letter-spacing: -.068em; max-width: 670px; }
+    .gradient-text { background: linear-gradient(90deg, #a79cff 5%, #e2b2ff 95%); color: transparent; -webkit-background-clip: text; background-clip: text; }
+    .hero-description { color: #bfc4de; max-width: 540px; font-size: 1.08rem; line-height: 1.8; margin-bottom: 30px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 13px; margin-bottom: 30px; }
+    .hero-note { display: flex; flex-wrap: wrap; gap: 14px 24px; color: #bfc4de; font-size: .88rem; }
+    .hero-note span { display: inline-flex; gap: 7px; align-items: center; }
+    .hero-note svg { color: #a79cff; }
+    .mockup-wrap { position: relative; perspective: 1100px; }
+    .mockup-wrap::before { position: absolute; content: ""; inset: 16% -9% -9% 0%; z-index: -1; background: #7665fd; filter: blur(75px); opacity: .18; }
+    .mockup { background: #fff; border-radius: 19px; border: 1px solid rgba(255,255,255,.22); box-shadow: 0 28px 75px rgba(2,6,29,.45); overflow: hidden; transform: rotate(2deg); }
+    .window-bar { display: flex; align-items: center; gap: 8px; padding: 13px 15px; background: #f6f7fc; border-bottom: 1px solid #e9eaf2; }
+    .window-dot { width: 9px; height: 9px; border-radius: 50%; background: #f4b7ad; }
+    .window-dot:nth-child(2) { background: #f3d096; }
+    .window-dot:nth-child(3) { background: #a6d8b8; }
+    .window-url { margin: 0 auto; padding: 4px 11px; border-radius: 6px; background: #e9eaf3; color: #777e94; font-size: .62rem; }
+    .window-content { display: grid; grid-template-columns: 108px 1fr; min-height: 285px; color: var(--ink); }
+    .window-sidebar { background: #f7f7fd; border-right: 1px solid #eeeef5; padding: 23px 13px; }
+    .editor-logo { height: 13px; width: 61px; border-radius: 4px; background: #7e6cf7; margin-bottom: 24px; }
+    .side-item { height: 9px; margin: 15px 0; background: #e2e3ef; border-radius: 4px; }
+    .side-item:nth-child(3) { width: 73%; }
+    .side-item:nth-child(4) { width: 89%; }
+    .side-item:nth-child(5) { width: 63%; }
+    .editor-canvas { padding: 22px; }
+    .canvas-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 19px; }
+    .canvas-head strong { color: #333b60; font-size: .65rem; }
+    .canvas-publish { color: #fff; font-size: .59rem; background: #6e5cfe; border-radius: 5px; padding: 4px 8px; }
+    .canvas-page { border: 1px solid #ececf6; border-radius: 11px; overflow: hidden; box-shadow: 0 8px 30px rgba(65,71,130,.08); }
+    .preview-heading { padding: 29px 22px 22px; background: linear-gradient(120deg, #eae8ff, #f8e9fa); }
+    .preview-badge { display: block; background: #7a69ee; width: 44px; height: 7px; border-radius: 4px; margin-bottom: 13px; }
+    .preview-title { width: 76%; height: 14px; border-radius: 4px; background: #34256f; margin-bottom: 10px; }
+    .preview-text { height: 6px; width: 89%; border-radius: 3px; background: #b3abc9; margin-bottom: 7px; }
+    .preview-text.short { width: 62%; }
+    .preview-btn { margin-top: 10px; width: 68px; height: 17px; border-radius: 4px; background: #7464ed; }
+    .preview-cards { padding: 13px; display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .preview-card { height: 56px; border: 1px solid #efedf8; background: #fbfaff; border-radius: 7px; }
+    .floating-tag { position: absolute; z-index: 2; right: -22px; bottom: 13px; padding: 14px 18px; border-radius: 13px; color: #222b4a; background: white; box-shadow: var(--shadow); font-size: .85rem; font-weight: 850; transform: rotate(-3deg); }
+    .floating-tag span { color: #34ab7b; margin-right: 6px; }
+
+    .section { padding: 100px 0; }
+    .section-heading { text-align: center; max-width: 680px; margin: 0 auto 48px; }
+    .kicker { display: inline-block; color: var(--purple); font-size: .76rem; font-weight: 870; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 13px; }
+    h2 { font-size: clamp(2rem, 3.4vw, 3.1rem); line-height: 1.15; letter-spacing: -.055em; margin-bottom: 15px; }
+    .section-heading p { color: var(--ink-soft); font-size: 1.03rem; }
+    .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 21px; }
+    .feature { background: white; padding: 32px; border-radius: var(--radius); border: 1px solid #ebedf5; box-shadow: 0 8px 34px rgba(24,24,74,.04); }
+    .feature-icon { display: grid; place-items: center; width: 52px; height: 52px; background: #eeebff; border-radius: 14px; margin-bottom: 24px; font-size: 1.45rem; }
+    .feature:nth-child(2) .feature-icon { background: #eaf6ff; }
+    .feature:nth-child(3) .feature-icon { background: #fff1e4; }
+    .feature h3 { font-size: 1.24rem; line-height: 1.3; letter-spacing: -.03em; margin-bottom: 10px; }
+    .feature p { color: var(--ink-soft); font-size: .94rem; margin-bottom: 0; }
+
+    .transition { background: #edeafb; position: relative; overflow: hidden; padding: 100px 0; }
+    .transition::before { content: ""; display: block; position: absolute; top: -190px; right: -100px; width: 500px; height: 500px; border: 1px solid rgba(110,87,244,.12); border-radius: 50%; box-shadow: 0 0 0 60px rgba(110,87,244,.025), 0 0 0 130px rgba(110,87,244,.025); pointer-events: none; }
+    .transition-grid { display: grid; grid-template-columns: 1fr .95fr; align-items: center; gap: 64px; position: relative; }
+    .transition .kicker { color: #6150df; }
+    .transition h2 { max-width: 580px; }
+    .transition-intro { font-size: 1.06rem; color: #5b6182; max-width: 560px; margin-bottom: 24px; }
+    .transition-points { display: grid; gap: 16px; margin-top: 24px; }
+    .transition-point { display: flex; align-items: flex-start; gap: 12px; font-size: .96rem; font-weight: 600; }
+    .check { display: grid; place-items: center; border-radius: 50%; background: #d8d1ff; color: #5947da; width: 25px; height: 25px; flex: none; font-weight: 900; }
+    .date-card { background: #151a3a; color: white; border: 1px solid #393e68; padding: 34px; border-radius: 25px; box-shadow: 0 25px 65px rgba(23,18,80,.2); }
+    .date-label { display: inline-flex; padding: 6px 12px; border: 1px solid rgba(255,207,122,.33); background: rgba(255,207,122,.1); border-radius: 999px; color: #ffe0a0; font-size: .77rem; letter-spacing: .05em; font-weight: 800; margin-bottom: 18px; }
+    .date-title { font-size: clamp(1.65rem, 2.8vw, 2.15rem); line-height: 1.14; letter-spacing: -.035em; font-weight: 830; margin-bottom: 9px; }
+    .date-title span { color: #b6aaff; }
+    .date-text { font-size: .92rem; color: #b8bddb; margin-bottom: 26px; }
+    .countdown { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 9px; }
+    .count-item { border: 1px solid rgba(255,255,255,.13); background: rgba(255,255,255,.06); padding: 14px 4px 10px; border-radius: 13px; text-align: center; }
+    .count-number { display: block; font-weight: 880; font-variant-numeric: tabular-nums; font-size: clamp(1.5rem, 3.1vw, 2rem); line-height: 1.1; }
+    .count-name { color: #b9bddd; display: block; font-size: .66rem; text-transform: uppercase; letter-spacing: .08em; margin-top: 8px; }
+    .count-caption { font-size: .75rem; margin: 17px 0 0; color: #a8afd4; text-align: center; }
+    .transition-disclaimer { margin-top: 24px; max-width: 600px; font-size: .88rem; color: #63698b; }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; counter-reset: step; }
+    .step { position: relative; padding: 30px 28px; border-radius: 19px; background: white; border: 1px solid var(--line); }
+    .step .step-number { display: inline-flex; width: 36px; height: 36px; justify-content: center; align-items: center; border-radius: 10px; color: var(--purple); font-weight: 850; background: var(--lavender); margin-bottom: 18px; }
+    .step h3 { margin-bottom: 8px; font-size: 1.18rem; letter-spacing: -.03em; }
+    .step p { color: var(--ink-soft); font-size: .94rem; margin-bottom: 0; }
+    .faq { padding: 10px 0 100px; }
+    .faq-container { max-width: 780px; }
+    .faq details { border-bottom: 1px solid #dee1ed; padding: 18px 0; }
+    .faq summary { font-weight: 750; font-size: 1.05rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 1.55rem; font-weight: 400; color: var(--purple); flex: none; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { color: var(--ink-soft); max-width: 690px; margin: 12px 0 4px; }
+    .bottom-cta { background: #171c3c; color: white; border-radius: 28px; padding: 54px 56px; display: flex; align-items: center; justify-content: space-between; gap: 35px; margin-bottom: 100px; }
+    .bottom-cta h2 { font-size: clamp(1.7rem,3vw,2.45rem); margin: 0 0 9px; }
+    .bottom-cta p { color: #bbc0df; margin: 0; }
+    .bottom-cta .button { flex: none; }
+    .footer { border-top: 1px solid #e7e9f1; padding: 35px 0; background: #fff; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; align-items: center; color: #737a93; font-size: .84rem; }
+    .footer .brand { color: var(--ink); font-size: 1rem; }
+    .footer .brand-icon { width: 32px; height: 32px; font-size: 1rem; border-radius: 9px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    .footer-links a:hover { color: var(--purple); }
+    @media (max-width: 980px) {
+      .hero-grid, .transition-grid { gap: 34px; }
+      .hero { padding: 75px 0; }
+      .mockup { transform: rotate(1deg); }
+      .desktop-nav { gap: 15px; }
+      .feature { padding: 25px; }
     }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
+    @media (max-width: 760px) {
+      .container { width: min(100% - 36px, 560px); }
+      .header-inner { min-height: 67px; }
+      .desktop-nav, .nav-actions .button { display: none; }
+      .menu-toggle { display: block; }
+      .mobile-nav.is-open { display: block; }
+      .hero-grid, .transition-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0 72px; }
+      h1 { font-size: clamp(2.75rem, 10vw, 4rem); }
+      .hero-description { font-size: 1rem; }
+      .mockup-wrap { max-width: 480px; margin: 24px auto 0; width: calc(100% - 20px); }
+      .floating-tag { right: -11px; }
+      .section, .transition { padding: 72px 0; }
+      .features-grid, .steps-grid { grid-template-columns: 1fr; }
+      .transition-grid { gap: 32px; }
+      .faq { padding: 10px 0 70px; }
+      .bottom-cta { display: block; text-align: center; padding: 38px 26px; margin-bottom: 70px; }
+      .bottom-cta p { margin-bottom: 24px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
     }
-    nav a:hover {
-      text-decoration: underline;
+    @media (max-width: 370px) {
+      .container { width: calc(100% - 28px); }
+      .hero-buttons .button { width: 100%; }
+      .window-content { grid-template-columns: 70px 1fr; }
+      .window-sidebar { padding: 20px 8px; }
+      .editor-canvas { padding: 12px; }
+      .date-card { padding: 25px 17px; }
+      .count-item { padding-inline: 2px; }
     }
-    section {
-      padding: 80px 20px;
-      min-height: 100vh;
-    }
-    #home {
-      background: #eee;
-    }
-    #about {
-      background: #ddd;
-    }
-    #contact {
-      background: #ccc;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    form {
-      max-width: 400px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-    }
-    input, textarea, button {
-      margin: 5px 0;
-      padding: 10px;
-      font-size: 16px;
-    }
-    button {
-      background: #444;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #666;
-    }
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 10px;
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
     }
   </style>
 </head>
 <body>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+  <div class="notice">✨ Le <strong>1er janvier 2027</strong>, devffin Sites laissera sa place à <strong>Page.GD Sites (lnkto Sites)</strong>. Transfert des projets sur demande. <a href="#transition">Découvrir l'annonce →</a></div>
 
-  <header>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#accueil" aria-label="devffin Sites — accueil">
+        <span class="brand-icon" aria-hidden="true">d.</span>
+        <span>devffin <span class="accent">Sites</span></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Navigation principale">
+        <a href="#fonctionnalites">Fonctionnalités</a>
+        <a href="#comment-ca-marche">Comment ça marche</a>
+        <a href="#transition">Page.GD Sites <span aria-hidden="true">↗</span></a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- Adaptez editor.php si votre éditeur se trouve à une autre adresse. -->
+        <a class="button button-primary" href="editor.php">Créer mon site <span aria-hidden="true">↗</span></a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">☰</button>
+      </div>
+    </div>
+    <nav class="mobile-nav container" id="mobile-nav" aria-label="Navigation mobile">
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#comment-ca-marche">Comment ça marche</a>
+      <a href="#transition">Page.GD Sites</a>
+      <a href="#faq">FAQ</a>
+      <a href="editor.php">Créer mon site ↗</a>
     </nav>
   </header>
 
-  <section id="home">
-    <h1>Welcome to Devffin Sites</h1>
-    <p style="text-align:center;">This is the home section of Devffin Sites.</p>
-  </section>
+  <main id="contenu">
+    <section class="hero" id="accueil" aria-labelledby="titre-principal">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><span class="dot" aria-hidden="true"></span> La création de sites, à votre portée</span>
+          <h1 id="titre-principal">Votre idée mérite <span class="gradient-text">son propre site.</span></h1>
+          <p class="hero-description">Un projet, une passion, une page à partager ? Donnez vie à votre présence en ligne avec <strong>devffin Sites</strong>, simplement et à votre rythme.</p>
+          <div class="hero-buttons">
+            <a class="button button-primary" href="editor.php">Créer mon site <span aria-hidden="true">→</span></a>
+            <a class="button button-ghost" href="#fonctionnalites">Découvrir la plateforme <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero-note">
+            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Un espace pour vos idées</span>
+            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Créez à votre façon</span>
+          </div>
+        </div>
+        <div class="mockup-wrap" aria-label="Illustration d'une interface de création de site">
+          <div class="mockup" aria-hidden="true">
+            <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-url">Mon site • Aperçu</span></div>
+            <div class="window-content">
+              <div class="window-sidebar"><div class="editor-logo"></div><div class="side-item"></div><div class="side-item"></div><div class="side-item"></div><div class="side-item"></div></div>
+              <div class="editor-canvas">
+                <div class="canvas-head"><strong>Mon nouveau site</strong><span class="canvas-publish">Publier ↗</span></div>
+                <div class="canvas-page">
+                  <div class="preview-heading"><span class="preview-badge"></span><div class="preview-title"></div><div class="preview-text"></div><div class="preview-text short"></div><div class="preview-btn"></div></div>
+                  <div class="preview-cards"><div class="preview-card"></div><div class="preview-card"></div><div class="preview-card"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="floating-tag" aria-hidden="true"><span>●</span> Votre espace créatif</div>
+        </div>
+      </div>
+    </section>
 
-  <section id="about">
-    <h2>About</h2>
-    <p style="max-width:600px; margin:auto; text-align:center;">
-      Devffin Sites allows you to create a simple and clean one-page website for your projects.
-    </p>
-  </section>
+    <section class="section" id="fonctionnalites" aria-labelledby="fonctionnalites-titre">
+      <div class="container">
+        <div class="section-heading"><span class="kicker">Pourquoi devffin Sites ?</span><h2 id="fonctionnalites-titre">Une place pour tous vos projets.</h2><p>Une porte d'entrée vers la création web, pour présenter ce qui compte pour vous.</p></div>
+        <div class="features-grid">
+          <article class="feature"><div class="feature-icon" aria-hidden="true">✦</div><h3>Exprimez vos idées</h3><p>Imaginez une page personnelle, un portfolio ou une vitrine pour votre projet.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">▣</div><h3>Un espace à personnaliser</h3><p>Construisez un univers visuel qui représente votre identité et votre contenu.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">↗</div><h3>Partagez votre création</h3><p>Faites découvrir votre site à votre communauté, vos amis ou vos visiteurs.</p></article>
+        </div>
+      </div>
+    </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <form id="contact-form">
-      <input type="text" name="name" placeholder="Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <textarea name="message" placeholder="Your message..." rows="5" required></textarea>
-      <button type="submit">Send</button>
-    </form>
-  </section>
+    <section class="transition" id="transition" aria-labelledby="transition-titre">
+      <div class="container transition-grid">
+        <div>
+          <span class="kicker">Annonce officielle • 2027</span>
+          <h2 id="transition-titre">devffin Sites laisse sa place à <span style="color:#6252df">Page.GD Sites.</span></h2>
+          <p class="transition-intro"><strong>Le 1er janvier 2027, devffin Sites laissera sa place à Page.GD Sites (lnkto Sites).</strong> Les projets créés sur devffin Sites pourront être transférés vers la nouvelle plateforme <strong>uniquement à la demande de leurs propriétaires</strong>.</p>
+          <div class="transition-points">
+            <div class="transition-point"><span class="check" aria-hidden="true">✓</span><span><strong>Nom actuel :</strong> devffin Sites</span></div>
+            <div class="transition-point"><span class="check" aria-hidden="true">✓</span><span><strong>Plateforme qui prend le relais :</strong> Page.GD Sites (lnkto Sites)</span></div>
+            <div class="transition-point"><span class="check" aria-hidden="true">✓</span><span><strong>Date du changement :</strong> vendredi 1er janvier 2027</span></div>
+            <div class="transition-point"><span class="check" aria-hidden="true">✓</span><span><strong>Transfert des projets :</strong> sur demande uniquement, pas de transfert automatique</span></div>
+          </div>
+          <p class="transition-disclaimer"><strong>Important :</strong> sans demande de transfert, un projet ne sera pas automatiquement déplacé vers Page.GD Sites. La procédure de demande et le devenir des projets non transférés seront précisés séparément.</p>
+        </div>
+        <div class="date-card">
+          <span class="date-label">✧ RENDEZ-VOUS EN 2027</span>
+          <div class="date-title">devffin Sites <span>→</span><br>Page.GD Sites</div>
+          <p class="date-text">Le compte à rebours avant que Page.GD Sites prenne le relais. Vos projets pourront suivre, sur demande.</p>
+          <div class="countdown" id="countdown" role="timer" aria-label="Temps restant avant le 1er janvier 2027">
+            <div class="count-item"><span class="count-number" id="days">--</span><span class="count-name">Jours</span></div>
+            <div class="count-item"><span class="count-number" id="hours">--</span><span class="count-name">Heures</span></div>
+            <div class="count-item"><span class="count-number" id="minutes">--</span><span class="count-name">Minutes</span></div>
+            <div class="count-item"><span class="count-number" id="seconds">--</span><span class="count-name">Secondes</span></div>
+          </div>
+          <p class="count-caption" id="count-caption">Jusqu'au 1er janvier 2027 à 00h00 (heure de Paris)</p>
+        </div>
+      </div>
+    </section>
 
-  <footer>
-    <p>&copy; 2025 Devffin Sites</p>
-  </footer>
+    <section class="section" id="comment-ca-marche" aria-labelledby="etapes-titre">
+      <div class="container">
+        <div class="section-heading"><span class="kicker">Lancez-vous</span><h2 id="etapes-titre">De l'idée à votre page, simplement.</h2><p>Trois étapes pour commencer à imaginer votre présence en ligne.</p></div>
+        <div class="steps-grid">
+          <article class="step"><span class="step-number">01</span><h3>Imaginez</h3><p>Choisissez ce que vous voulez présenter : vos passions, vos réalisations ou votre projet.</p></article>
+          <article class="step"><span class="step-number">02</span><h3>Construisez</h3><p>Accédez à l'éditeur et donnez progressivement forme à votre page.</p></article>
+          <article class="step"><span class="step-number">03</span><h3>Partagez</h3><p>Lorsque votre site est prêt, faites-le découvrir autour de vous.</p></article>
+        </div>
+      </div>
+    </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <section class="faq" id="faq" aria-labelledby="faq-titre">
+      <div class="container faq-container">
+        <div class="section-heading"><span class="kicker">Vos questions</span><h2 id="faq-titre">Quelques réponses utiles.</h2></div>
+        <details><summary>Quand devffin Sites laissera-t-il sa place ?</summary><p><strong>Le vendredi 1er janvier 2027</strong>, Page.GD Sites (lnkto Sites) prendra la relève de devffin Sites.</p></details>
+        <details><summary>Qu'est-ce que Page.GD Sites (lnkto Sites) ?</summary><p>C'est la plateforme qui remplacera devffin Sites à partir du 1er janvier 2027.</p></details>
+        <details><summary>Mes projets seront-ils automatiquement transférés ?</summary><p><strong>Non.</strong> Les projets pourront être transférés vers Page.GD Sites <strong>sur demande de leur propriétaire</strong>. Aucune migration automatique n'est annoncée. Les modalités de demande seront communiquées séparément.</p></details>
+        <details><summary>Que se passe-t-il si je ne demande pas le transfert ?</summary><p>Votre projet ne sera pas automatiquement transféré. Le devenir des projets non migrés sera précisé séparément.</p></details>
+        <details><summary>Puis-je encore utiliser devffin Sites aujourd'hui ?</summary><p>Vous pouvez accéder à l'éditeur actuel via le bouton « Créer mon site », tant qu'il reste disponible sur votre hébergement.</p></details>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="bottom-cta" aria-labelledby="cta-titre"><div><h2 id="cta-titre">Et si votre prochain projet commençait ici ?</h2><p>Votre idée, votre site, votre univers.</p></div><a class="button button-light" href="editor.php">Créer mon site <span aria-hidden="true">→</span></a></section>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container footer-inner"><a href="#accueil" class="brand"><span class="brand-icon" aria-hidden="true">d.</span><span>devffin <span class="accent">Sites</span></span></a><span>© <span id="year">2026</span> devffin Sites. Relève par Page.GD Sites le 01/01/2027 ; transfert des projets sur demande.</span><div class="footer-links"><a href="#transition">L'annonce</a><a href="#faq">Questions fréquentes</a></div></div></footer>
+
   <script>
-    (function(){
-      emailjs.init("5KGgCCv7VOqmLOwRs"); // ← Remplace avec ton User ID EmailJS
+    (() => {
+      const menuButton = document.getElementById('menu-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      menuButton.addEventListener('click', () => {
+        const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', String(!isOpen));
+        menuButton.setAttribute('aria-label', isOpen ? 'Ouvrir le menu' : 'Fermer le menu');
+        menuButton.textContent = isOpen ? '☰' : '✕';
+        mobileNav.classList.toggle('is-open', !isOpen);
+      });
+      mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        mobileNav.classList.remove('is-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Ouvrir le menu');
+        menuButton.textContent = '☰';
+      }));
+
+      // Minuit le 1er janvier 2027 à Paris (UTC+1 en hiver).
+      const target = Date.parse('2027-01-01T00:00:00+01:00');
+      const els = ['days','hours','minutes','seconds'].map(id => document.getElementById(id));
+      const caption = document.getElementById('count-caption');
+      const pad = v => String(v).padStart(2,'0');
+      function refreshCountdown() {
+        const ms = Math.max(0, target - Date.now());
+        const totalSeconds = Math.floor(ms / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor(totalSeconds % 86400 / 3600);
+        const minutes = Math.floor(totalSeconds % 3600 / 60);
+        const seconds = totalSeconds % 60;
+        [String(days), pad(hours), pad(minutes), pad(seconds)].forEach((value, index) => { els[index].textContent = value; });
+        if (ms === 0) {
+          caption.textContent = 'Depuis le 1er janvier 2027, Page.GD Sites prend la relève. Le transfert des projets se fait sur demande.';
+          return true;
+        }
+        return false;
+      }
+      if (!refreshCountdown()) {
+        const timer = setInterval(() => { if (refreshCountdown()) clearInterval(timer); }, 1000);
+      }
+      document.getElementById('year').textContent = new Date().getFullYear();
     })();
-
-    document.getElementById("contact-form").addEventListener("submit", function(event){
-      event.preventDefault();
-
-      emailjs.sendForm("dsites", "dsites", this)
-        .then(function(){
-          alert("Message sent successfully!");
-        }, function(error){
-          alert("Error sending message: " + JSON.stringify(error));
-        });
-    });
   </script>
-
 </body>
 </html>
